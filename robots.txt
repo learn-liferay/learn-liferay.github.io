@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: 
+
+Sitemap: http://learn-liferay.github.io/sitemap.xml 
