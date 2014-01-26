@@ -46,7 +46,11 @@ module Jekyll
     def render(context)
       code_dir = (context.registers[:site].config['code_dir'].sub(/^\//,'') || 'downloads/code')
       code_path = (Pathname.new(context.registers[:site].source) + code_dir).expand_path
-      file = code_path + @file
+      
+      # added code to handle subdirectories in the file name 
+      p = Pathname.new(@file)
+      file = code_path + p.dirname + p.basename
+      # file = code_path + @file (old code)
 
       if File.symlink?(code_path)
         return "Code directory '#{code_path}' cannot be a symlink"
