@@ -1,51 +1,67 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>
     <url>
-        <loc>http://learn-liferay.github.io/blog/2014/01/20/welcome/</loc>
-        <lastmod>2014-01-20T12:42:25-05:00</lastmod>
+        <loc>http://blog.learn-liferay.com/blog/2014/01/20/welcome/</loc>
+        <lastmod>2014-01-26T13:19:28-05:00</lastmod>
     </url>
     <url>
-        <loc>http://learn-liferay.github.io/about/</loc>
-        <lastmod>2014-01-20T12:42:25-05:00</lastmod>
+        <loc>
+            http://blog.learn-liferay.com/blog/2014/01/24/using-freemarker-macros-in-liferay-web-content-part-1/
+        </loc>
+        <lastmod>2014-01-26T12:20:34-05:00</lastmod>
     </url>
     <url>
-        <loc>http://learn-liferay.github.io/assets/bootstrap/about.html</loc>
+        <loc>
+            http://blog.learn-liferay.com/blog/2014/01/25/using-freemarker-macros-in-liferay-web-content-part-2/
+        </loc>
+        <lastmod>2014-01-26T13:28:25-05:00</lastmod>
+    </url>
+    <url>
+        <loc>http://blog.learn-liferay.com/about/</loc>
+        <lastmod>2014-01-26T13:20:19-05:00</lastmod>
+    </url>
+    <url>
+        <loc>http://blog.learn-liferay.com/assets/bootstrap/about.html</loc>
         <lastmod>2014-01-20T12:02:37-05:00</lastmod>
     </url>
     <url>
-        <loc>http://learn-liferay.github.io/assets/bootstrap/components.html</loc>
+        <loc>http://blog.learn-liferay.com/assets/bootstrap/components.html</loc>
         <lastmod>2014-01-20T12:02:37-05:00</lastmod>
     </url>
     <url>
-        <loc>http://learn-liferay.github.io/assets/bootstrap/css.html</loc>
+        <loc>http://blog.learn-liferay.com/assets/bootstrap/css.html</loc>
         <lastmod>2014-01-20T12:02:37-05:00</lastmod>
     </url>
     <url>
-        <loc>http://learn-liferay.github.io/assets/bootstrap/customize.html</loc>
+        <loc>http://blog.learn-liferay.com/assets/bootstrap/customize.html</loc>
         <lastmod>2014-01-20T12:02:37-05:00</lastmod>
     </url>
     <url>
-        <loc>http://learn-liferay.github.io/assets/bootstrap/getting-started.html</loc>
+        <loc>http://blog.learn-liferay.com/assets/bootstrap/getting-started.html</loc>
         <lastmod>2014-01-20T12:02:37-05:00</lastmod>
     </url>
     <url>
-        <loc>http://learn-liferay.github.io/assets/bootstrap/</loc>
-        <lastmod>2014-01-20T12:42:25-05:00</lastmod>
+        <loc>http://blog.learn-liferay.com/assets/bootstrap/</loc>
+        <lastmod>2014-01-26T13:28:25-05:00</lastmod>
     </url>
     <url>
-        <loc>http://learn-liferay.github.io/assets/bootstrap/javascript.html</loc>
+        <loc>http://blog.learn-liferay.com/assets/bootstrap/javascript.html</loc>
         <lastmod>2014-01-20T12:02:37-05:00</lastmod>
     </url>
     <url>
-        <loc>http://learn-liferay.github.io/blog/archives/</loc>
-        <lastmod>2014-01-20T12:42:25-05:00</lastmod>
+        <loc>http://blog.learn-liferay.com/blog/archives/</loc>
+        <lastmod>2014-01-26T13:28:25-05:00</lastmod>
     </url>
     <url>
-        <loc>http://learn-liferay.github.io/</loc>
-        <lastmod>2014-01-20T12:42:25-05:00</lastmod>
+        <loc>http://blog.learn-liferay.com/feedback/</loc>
+        <lastmod>2014-01-26T13:17:22-05:00</lastmod>
     </url>
     <url>
-        <loc>http://learn-liferay.github.io/robots.txt</loc>
+        <loc>http://blog.learn-liferay.com/</loc>
+        <lastmod>2014-01-26T13:28:25-05:00</lastmod>
+    </url>
+    <url>
+        <loc>http://blog.learn-liferay.com/robots.txt</loc>
         <lastmod>2014-01-20T12:02:37-05:00</lastmod>
     </url>
 </urlset>

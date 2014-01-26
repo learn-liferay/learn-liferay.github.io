@@ -1,0 +1,17 @@
+<style type="text/css">
+  .wcm-td.odd {
+    background-color: #fff;
+  }
+  .wcm-td.even {
+    background-color: #eee;
+  }
+  .wcm-td {
+    padding: 3px;
+  }
+  .wcm-table {
+    border: 1px solid black;
+  }
+</style>
+
+<@mylib.createTable items=state.siblings />
+

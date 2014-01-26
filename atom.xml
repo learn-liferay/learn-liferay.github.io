@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Learn Liferay]]></title>
-  <link href="http://learn-liferay.github.io/atom.xml" rel="self"/>
-  <link href="http://learn-liferay.github.io/"/>
-  <updated>2014-01-20T19:05:31-05:00</updated>
-  <id>http://learn-liferay.github.io/</id>
+  <link href="http://blog.learn-liferay.com/atom.xml" rel="self"/>
+  <link href="http://blog.learn-liferay.com/"/>
+  <updated>2014-01-26T13:29:39-05:00</updated>
+  <id>http://blog.learn-liferay.com/</id>
   <author>
     <name><![CDATA[Barrie Selack]]></name>
     
@@ -14,11 +14,215 @@
 
   
   <entry>
+    <title type="html"><![CDATA[Using FreeMarker Macros in Liferay Web Content - Part 2]]></title>
+    <link href="http://blog.learn-liferay.com/blog/2014/01/25/using-freemarker-macros-in-liferay-web-content-part-2/"/>
+    <updated>2014-01-25T20:05:12-05:00</updated>
+    <id>http://blog.learn-liferay.com/blog/2014/01/25/using-freemarker-macros-in-liferay-web-content-part-2</id>
+    <content type="html"><![CDATA[<p>Now that we have our FreeMarker macro library deployed (<a href="http://blog.learn-liferay.com/blog/2014/01/24/using-freemarker-macros-in-liferay-web-content-part-1/" title="Part 1"><em>from part 1</em></a>), let&rsquo;s set up the web content structure, template and article to test our macro library. If you are unfamiliar with web content structures and templates you will want to read the Liferay User Guide on <a href="http://www.liferay.com/documentation/liferay-portal/6.1/user-guide/-/ai/lp-6-1-ugen03-advanced-content-creation-6" title="6.1 WCM Docs">advanced content with structures and templates</a> first.</p>
+
+<!--more-->
+
+
+<p>The end result will create a table with alternating color rows by calling a macro which does all the work and can be reused. It will look like this.</p>
+
+<p><img src="http://blog.learn-liferay.com/images/freemarker_macros/web-content-display.jpg"></p>
+
+<p>To start, create a structure. The structure will be a simple repeatable field.</p>
+
+<p><img src="http://blog.learn-liferay.com/images/freemarker_macros/structure.jpg"></p>
+
+<p>For the template, we&rsquo;ll include the styles in the template (just for the purpose of making this example simple to do).</p>
+
+<p>Make sure you uncheck the <strong>Cachable</strong> checkbox and select FTL as the <strong>Language Type</strong>. Make sure you pick the structure, I sometimes forget to do that, when you create your template.</p>
+
+<p><img src="http://blog.learn-liferay.com/images/freemarker_macros/template-options.jpg"></p>
+
+<p>Then you can paste the template code into the editor box when you click on <strong>Launch Editor</strong>.</p>
+
+<figure class='code'><figcaption><span>The WCM Template  (template.txt)</span> <a href='http://blog.learn-liferay.com/downloads/code/freemarker_macros/template.txt'>download</a></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class='css'><span class='line'><span class="o">&lt;</span><span class="nt">style</span> <span class="nt">type</span><span class="o">=</span><span class="s2">&quot;text/css&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="nc">.wcm-td.odd</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">background-color</span><span class="o">:</span> <span class="m">#fff</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="nc">.wcm-td.even</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">background-color</span><span class="o">:</span> <span class="m">#eee</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="nc">.wcm-td</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">padding</span><span class="o">:</span> <span class="m">3px</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="nc">.wcm-table</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">border</span><span class="o">:</span> <span class="m">1px</span> <span class="k">solid</span> <span class="nb">black</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="nt">style</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="k">@mylib</span><span class="nc">.createTable</span> <span class="nt">items</span><span class="o">=</span><span class="nt">state</span><span class="nc">.siblings</span> <span class="o">/&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>So looking at the template, we see the styles definitions and this&hellip;</p>
+
+<p><strong>&lt;@mylib.createTable items=state.siblings /></strong></p>
+
+<p>This is the macro call. It&rsquo;s calling the createTable from the mylib file. You can have multiple macro files and the name of the file (without file extension) is used to namespace the macro. In our case the file name was mylib.ftl, so the namespace is myftl.</p>
+
+<p>It&rsquo;s calling the createTable macro and passing a parameter <strong>items</strong> with the value of <strong>states.siblings</strong>. This passes the repeating field <strong>states</strong> values to the macro.</p>
+
+<p>You can read more about FreeMarker macros in the <a href="http://freemarker.org/docs/ref_directive_macro.html" title="FreeMarker Manual on macros">FreeMarker manual &ndash; macros section</a>.</p>
+
+<p>Looking at the template used below, there are actually two macros. One builds the table and calls the setRowColorClass macro in the same file. As it&rsquo;s in the same file we don&rsquo;t need to use the <strong>mylib</strong> namespace.</p>
+
+<figure class='code'><figcaption><span>The macro file  (mylib.ftl)</span> <a href='http://blog.learn-liferay.com/downloads/code/freemarker_macros/mylib.ftl'>download</a></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="o">&lt;</span><span class="err">#</span><span class="n">macro</span> <span class="n">createTable</span> <span class="n">items</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="err">#</span><span class="n">assign</span> <span class="n">rowNumber</span> <span class="o">=</span> <span class="mi">1</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="n">table</span> <span class="n">class</span><span class="o">=</span><span class="s">&quot;wcm-table&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="err">#</span><span class="n">list</span> <span class="n">items</span> <span class="n">as</span> <span class="n">item</span><span class="o">&gt;</span>
+</span><span class='line'>    <span class="o">&lt;</span><span class="n">tr</span><span class="o">&gt;</span>
+</span><span class='line'>      <span class="o">&lt;</span><span class="n">td</span> <span class="n">class</span><span class="o">=</span><span class="s">&quot;wcm-td &lt;@setRowColorClass rowNumber=rowNumber /&gt;&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>        <span class="n">$</span><span class="o">{</span><span class="n">item</span><span class="o">.</span><span class="na">data</span><span class="o">}</span>
+</span><span class='line'>      <span class="o">&lt;/</span><span class="n">td</span><span class="o">&gt;</span>
+</span><span class='line'>    <span class="o">&lt;/</span><span class="n">tr</span><span class="o">&gt;</span>
+</span><span class='line'>    <span class="o">&lt;</span><span class="err">#</span><span class="n">assign</span> <span class="n">rowNumber</span> <span class="o">=</span> <span class="n">rowNumber</span> <span class="o">+</span> <span class="mi">1</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="o">&lt;/</span><span class="err">#</span><span class="n">list</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="o">&lt;/</span><span class="n">table</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="err">#</span><span class="n">macro</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="err">#</span><span class="n">macro</span> <span class="n">setRowColorClass</span> <span class="n">rowNumber</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="err">#</span><span class="k">if</span> <span class="o">(</span><span class="n">rowNumber</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="o">)&gt;</span>
+</span><span class='line'>    <span class="n">even</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="err">#</span><span class="k">else</span><span class="o">&gt;</span>
+</span><span class='line'>    <span class="n">odd</span>
+</span><span class='line'>  <span class="o">&lt;/</span><span class="err">#</span><span class="k">if</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="err">#</span><span class="n">macro</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now create the content article and fill in some of the states,</p>
+
+<p><img src="http://blog.learn-liferay.com/images/freemarker_macros/web-content-filled-in.jpg" width="450"></p>
+
+<p>At this point you should have the structure, template and article done. If you put the article on a page, you should see&hellip;</p>
+
+<p><img src="http://blog.learn-liferay.com/images/freemarker_macros/web-content-display.jpg"></p>
+
+<p>Now you can create and use your own FreeMarker macros and be more productive.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Using FreeMarker Macros in Liferay Web Content - Part 1]]></title>
+    <link href="http://blog.learn-liferay.com/blog/2014/01/24/using-freemarker-macros-in-liferay-web-content-part-1/"/>
+    <updated>2014-01-24T14:51:58-05:00</updated>
+    <id>http://blog.learn-liferay.com/blog/2014/01/24/using-freemarker-macros-in-liferay-web-content-part-1</id>
+    <content type="html"><![CDATA[<p>Liferay supports using FreeMarker as a web content template language. There are many things I really like about FreeMarker and use it whenever possible. Macros are one of those features, as you can create libraries of routines you can use over and over. But it&rsquo;s not apparent where to place those libraries to get Liferay to recognize them and use them.</p>
+
+<!--more-->
+
+
+<p>There is a setting in portal.properties where you can specify macro libraries</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>#
+</span><span class='line'># Input a list of comma delimited macros that will be loaded. These files
+</span><span class='line'># must exist in the class path.
+</span><span class='line'>#
+</span><span class='line'>freemarker.engine.macro.library=FTL_liferay.ftl as liferay</span></code></pre></td></tr></table></div></figure>
+
+
+<p>but, unfortunately if you do, they are not recognized by WCM templates.</p>
+
+<p>So it looks like we need to find a way to put them somewhere that the built in template loaders will find them. The comment above is a provides the hint of where they need to be.</p>
+
+<p><code>These files must exist in the class path.</code></p>
+
+<p>So even though we can&rsquo;t specify them in that property, we just need to get them into the class path somewhere.</p>
+
+<p><strong>Hooks to the rescue!</strong></p>
+
+<p>We can create a hook to deploy our macro library files somewhere in the class path. And while most people talk about using a hook for custom jsps, any file can be deployed by a hook.</p>
+
+<figure class='code'><figcaption><span>liferay-hook.xml </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="cp">&lt;?xml version=&quot;1.0&quot;?&gt;</span>
+</span><span class='line'><span class="cp">&lt;!DOCTYPE hook PUBLIC &quot;-//Liferay//DTD Hook 6.1.0//EN&quot; &quot;http://www.liferay.com/dtd/liferay-hook_6_1_0.dtd&quot;&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;hook&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;custom-jsp-dir&gt;</span>/custom_files<span class="nt">&lt;/custom-jsp-dir&gt;</span>
+</span><span class='line'><span class="nt">&lt;/hook&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Like a typical jsp hook, I just set the directory name for where the files will be added/replaced. In my case I used <strong>custom_files</strong> instead of custom_jsps because I&rsquo;m not using jsps.</p>
+
+<p>Where you put them in the class path is up to you, I put them in <code>/WEB-INF/classes/freemarker/macros</code></p>
+
+<p><img src="http://blog.learn-liferay.com/images/freemarker_macros/custom-files-path.jpg" width="300"></p>
+
+<p>I&rsquo;ve created a hook in the <a href="https://github.com/learn-liferay/blog-files" title="blog files">blog files</a> project called <a href="https://github.com/learn-liferay/blog-files/tree/master/liferay-plugins-sdk-6.1.1/hooks/freemarker-macros-hook" title="FreeMarker Macros Hook">freemarker-macros-hook</a> for you to use as a starting point.</p>
+
+<p>Build and deploy your hook and verify that the library got deployed where you expected it to.</p>
+
+<p>In the next part, we&rsquo;ll actually use the mylib.ftl and see how this all works.</p>
+
+<hr />
+
+<p><em>(make sure you use the <strong><a href="https://github.com/learn-liferay/blog-files/blob/master/liferay-plugins-sdk-6.1.1/hooks/freemarker-macros-hook/docroot/custom_files/WEB-INF/classes/freemarker/macros/mylib.ftl" title="mylib.ftl">mylib.ftl</a></strong> in the project if you plan to move on to <a href="http://blog.learn-liferay.com/blog/2014/01/25/using-freemarker-macros-in-liferay-web-content-part-2/" title="Part 2">part 2</a>)</em></p>
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[Welcome]]></title>
-    <link href="http://learn-liferay.github.io/blog/2014/01/20/welcome/"/>
+    <link href="http://blog.learn-liferay.com/blog/2014/01/20/welcome/"/>
     <updated>2014-01-20T12:41:46-05:00</updated>
-    <id>http://learn-liferay.github.io/blog/2014/01/20/welcome</id>
-    <content type="html"><![CDATA[
+    <id>http://blog.learn-liferay.com/blog/2014/01/20/welcome</id>
+    <content type="html"><![CDATA[<h3>Welcome to the Learn Liferay blog.</h3>
+
+<p>The goal of this blog is to share ideas and techniques for using Liferay. If you have any feedback, questions or ideas for a post, please let me know using the <a href="http://blog.learn-liferay.com/feedback" title="Feedback Form">feedback form</a>.</p>
 ]]></content>
   </entry>
   

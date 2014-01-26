@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Using FreeMarker Macros in Liferay Web Content - Part 2 - Learn Liferay</title>
+  <meta name="author" content="Barrie Selack">
+
+  
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://blog.learn-liferay.com/blog/2014/01/25/using-freemarker-macros-in-liferay-web-content-part-2">
+  <link href="/favicon.png" type="image/png" rel="icon">
+  <link href="/atom.xml" rel="alternate" title="Learn Liferay" type="application/atom+xml">
+
+  <link href="/assets/bootstrap/yeti/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+<link href="/assets/bootstrap/yeti/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css">
+<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+
+
+  <script src="/javascripts/libs/jquery/jquery-2.0.3.min.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-47258888-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+  <body   >
+    <div id="wrap">
+      <header role="banner">
+        <nav class="navbar navbar-default" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Learn Liferay</a>
+        </div>
+
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li class="active">
+                    <a href="/">Blog</a>
+                </li>
+                <li >
+                    <a href="/blog/archives">Archives</a>
+                </li>
+                <li >
+                    <a href="/about">About</a>
+                </li>
+                <li >
+                    <a href="/feedback">Feedback</a>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a class="subscribe-rss" href="/atom.xml" title="subscribe via RSS">
+                        <span class="visible-xs">RSS</span>
+                        <img class="hidden-xs" src="/images/rss.png" alt="RSS">
+                    </a>
+                </li>
+                
+            </ul>
+            
+        </div>
+    </div>
+</nav>
+
+
+      </header>
+      <div id="main" class="container">
+        <div id="content">
+          <div class="row">
+  <div class="page-content col-md-9">
+    <article class="hentry" role="article">
+      
+  <header class="page-header">
+    
+      <p class="meta text-muted text-uppercase">
+        
+
+
+
+
+
+
+
+
+
+
+
+
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2014-01-25T20:05:12-05:00" pubdate data-updated="true">Jan 25<span>th</span>, 2014</time>
+        
+      </p>
+    
+    
+    <h1 class="entry-title">
+        Using FreeMarker Macros in Liferay Web Content - Part 2
+        
+    </h1>
+    
+  </header>
+
+
+<div class="entry-content clearfix"><p>Now that we have our FreeMarker macro library deployed (<a href="/blog/2014/01/24/using-freemarker-macros-in-liferay-web-content-part-1/" title="Part 1"><em>from part 1</em></a>), let&rsquo;s set up the web content structure, template and article to test our macro library. If you are unfamiliar with web content structures and templates you will want to read the Liferay User Guide on <a href="http://www.liferay.com/documentation/liferay-portal/6.1/user-guide/-/ai/lp-6-1-ugen03-advanced-content-creation-6" title="6.1 WCM Docs">advanced content with structures and templates</a> first.</p>
+
+<!--more-->
+
+
+<p>The end result will create a table with alternating color rows by calling a macro which does all the work and can be reused. It will look like this.</p>
+
+<p><img src="/images/freemarker_macros/web-content-display.jpg"></p>
+
+<p>To start, create a structure. The structure will be a simple repeatable field.</p>
+
+<p><img src="/images/freemarker_macros/structure.jpg"></p>
+
+<p>For the template, we&rsquo;ll include the styles in the template (just for the purpose of making this example simple to do).</p>
+
+<p>Make sure you uncheck the <strong>Cachable</strong> checkbox and select FTL as the <strong>Language Type</strong>. Make sure you pick the structure, I sometimes forget to do that, when you create your template.</p>
+
+<p><img src="/images/freemarker_macros/template-options.jpg"></p>
+
+<p>Then you can paste the template code into the editor box when you click on <strong>Launch Editor</strong>.</p>
+
+<figure class='code'><figcaption><span>The WCM Template  (template.txt)</span> <a href='/downloads/code/freemarker_macros/template.txt'>download</a></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class='css'><span class='line'><span class="o">&lt;</span><span class="nt">style</span> <span class="nt">type</span><span class="o">=</span><span class="s2">&quot;text/css&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="nc">.wcm-td.odd</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">background-color</span><span class="o">:</span> <span class="m">#fff</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="nc">.wcm-td.even</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">background-color</span><span class="o">:</span> <span class="m">#eee</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="nc">.wcm-td</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">padding</span><span class="o">:</span> <span class="m">3px</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="nc">.wcm-table</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">border</span><span class="o">:</span> <span class="m">1px</span> <span class="k">solid</span> <span class="nb">black</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="nt">style</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="k">@mylib</span><span class="nc">.createTable</span> <span class="nt">items</span><span class="o">=</span><span class="nt">state</span><span class="nc">.siblings</span> <span class="o">/&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>So looking at the template, we see the styles definitions and this&hellip;</p>
+
+<p><strong>&lt;@mylib.createTable items=state.siblings /></strong></p>
+
+<p>This is the macro call. It&rsquo;s calling the createTable from the mylib file. You can have multiple macro files and the name of the file (without file extension) is used to namespace the macro. In our case the file name was mylib.ftl, so the namespace is myftl.</p>
+
+<p>It&rsquo;s calling the createTable macro and passing a parameter <strong>items</strong> with the value of <strong>states.siblings</strong>. This passes the repeating field <strong>states</strong> values to the macro.</p>
+
+<p>You can read more about FreeMarker macros in the <a href="http://freemarker.org/docs/ref_directive_macro.html" title="FreeMarker Manual on macros">FreeMarker manual &ndash; macros section</a>.</p>
+
+<p>Looking at the template used below, there are actually two macros. One builds the table and calls the setRowColorClass macro in the same file. As it&rsquo;s in the same file we don&rsquo;t need to use the <strong>mylib</strong> namespace.</p>
+
+<figure class='code'><figcaption><span>The macro file  (mylib.ftl)</span> <a href='/downloads/code/freemarker_macros/mylib.ftl'>download</a></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="o">&lt;</span><span class="err">#</span><span class="n">macro</span> <span class="n">createTable</span> <span class="n">items</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="err">#</span><span class="n">assign</span> <span class="n">rowNumber</span> <span class="o">=</span> <span class="mi">1</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="n">table</span> <span class="n">class</span><span class="o">=</span><span class="s">&quot;wcm-table&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="err">#</span><span class="n">list</span> <span class="n">items</span> <span class="n">as</span> <span class="n">item</span><span class="o">&gt;</span>
+</span><span class='line'>    <span class="o">&lt;</span><span class="n">tr</span><span class="o">&gt;</span>
+</span><span class='line'>      <span class="o">&lt;</span><span class="n">td</span> <span class="n">class</span><span class="o">=</span><span class="s">&quot;wcm-td &lt;@setRowColorClass rowNumber=rowNumber /&gt;&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>        <span class="n">$</span><span class="o">{</span><span class="n">item</span><span class="o">.</span><span class="na">data</span><span class="o">}</span>
+</span><span class='line'>      <span class="o">&lt;/</span><span class="n">td</span><span class="o">&gt;</span>
+</span><span class='line'>    <span class="o">&lt;/</span><span class="n">tr</span><span class="o">&gt;</span>
+</span><span class='line'>    <span class="o">&lt;</span><span class="err">#</span><span class="n">assign</span> <span class="n">rowNumber</span> <span class="o">=</span> <span class="n">rowNumber</span> <span class="o">+</span> <span class="mi">1</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="o">&lt;/</span><span class="err">#</span><span class="n">list</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="o">&lt;/</span><span class="n">table</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="err">#</span><span class="n">macro</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="err">#</span><span class="n">macro</span> <span class="n">setRowColorClass</span> <span class="n">rowNumber</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="err">#</span><span class="k">if</span> <span class="o">(</span><span class="n">rowNumber</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="o">)&gt;</span>
+</span><span class='line'>    <span class="n">even</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="err">#</span><span class="k">else</span><span class="o">&gt;</span>
+</span><span class='line'>    <span class="n">odd</span>
+</span><span class='line'>  <span class="o">&lt;/</span><span class="err">#</span><span class="k">if</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="err">#</span><span class="n">macro</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now create the content article and fill in some of the states,</p>
+
+<p><img src="/images/freemarker_macros/web-content-filled-in.jpg" width="450"></p>
+
+<p>At this point you should have the structure, template and article done. If you put the article on a page, you should see&hellip;</p>
+
+<p><img src="/images/freemarker_macros/web-content-display.jpg"></p>
+
+<p>Now you can create and use your own FreeMarker macros and be more productive.</p>
+</div>
+
+
+      <footer>
+        <p class="meta text-muted">
+          
+  
+
+<span class="glyphicon glyphicon-user"></span> <span class="byline author vcard">Posted by <span class="fn">Barrie Selack</span></span>
+
+          
+
+
+
+
+
+
+
+
+
+
+
+
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2014-01-25T20:05:12-05:00" pubdate data-updated="true">Jan 25<span>th</span>, 2014</time>
+          
+
+<span class="glyphicon glyphicon-tags"></span>&nbsp;
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/freemarker/'>FreeMarker</a>, <a class='category' href='/blog/categories/liferay/'>Liferay</a>, <a class='category' href='/blog/categories/wcm/'>WCM</a>
+  
+</span>
+
+
+        </p>
+        
+          <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://blog.learn-liferay.com/blog/2014/01/25/using-freemarker-macros-in-liferay-web-content-part-2/" data-via="" data-counturl="http://blog.learn-liferay.com/blog/2014/01/25/using-freemarker-macros-in-liferay-web-content-part-2/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+</div>
+
+        
+        
+          <ul class="meta text-muted pager">
+            
+            <li class="previous"><a href="/blog/2014/01/24/using-freemarker-macros-in-liferay-web-content-part-1/" title="Previous Post: Using FreeMarker Macros in Liferay Web Content - Part 1">&laquo; Using FreeMarker Macros in Liferay Web Content - Part 1</a></li>
+            
+            
+          </ul>
+        
+      </footer>
+    </article>
+	
+    
+      <section>
+        <h3>Comments</h3>
+        <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+      </section>
+    
+  </div>
+
+  
+  <aside class="sidebar col-md-3">
+    
+      <section class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Recent Posts</h3>
+  </div>
+  
+  <div id="recent_posts" class="list-group">
+    
+    <a class="list-group-item active" href="/blog/2014/01/25/using-freemarker-macros-in-liferay-web-content-part-2/">Using FreeMarker Macros in Liferay Web Content - Part 2</a>
+    
+    <a class="list-group-item " href="/blog/2014/01/24/using-freemarker-macros-in-liferay-web-content-part-1/">Using FreeMarker Macros in Liferay Web Content - Part 1</a>
+    
+    <a class="list-group-item " href="/blog/2014/01/20/welcome/">Welcome</a>
+    
+  </div>
+</section>
+<section class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Categories</h3>
+  </div>
+  <div class="list-group">
+    
+    
+    <a class="list-group-item " href="/blog/categories/freemarker/index.html">
+        <span class="badge">2</span>
+        FreeMarker
+      </a>
+    
+    
+    <a class="list-group-item " href="/blog/categories/hooks/index.html">
+        <span class="badge">1</span>
+        Hooks
+      </a>
+    
+    
+    <a class="list-group-item " href="/blog/categories/liferay/index.html">
+        <span class="badge">2</span>
+        Liferay
+      </a>
+    
+    
+    <a class="list-group-item " href="/blog/categories/wcm/index.html">
+        <span class="badge">2</span>
+        WCM
+      </a>
+    
+  </div>
+</section>
+
+
+
+
+
+    
+  </aside>
+  
+</div>
+
+        </div>
+      </div>
+    </div>
+    <footer role="contentinfo"><div class="container">
+    <p class="text-muted credits">
+  Copyright &copy; 2014 - Barrie Selack<br>
+  <small>
+      <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>,
+      <span class="credit">customized with <a href="https://github.com/kAworu/octostrap3">octostrap3</a></span>.
+  </small>
+</p>
+
+</div>
+</footer>
+    <script src="/assets/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="/javascripts/modernizr-2.0.js"></script>
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'learnliferay';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://blog.learn-liferay.com/blog/2014/01/25/using-freemarker-macros-in-liferay-web-content-part-2/';
+        var disqus_url = 'http://blog.learn-liferay.com/blog/2014/01/25/using-freemarker-macros-in-liferay-web-content-part-2/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+  </body>
+</html>

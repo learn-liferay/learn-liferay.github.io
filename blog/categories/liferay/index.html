@@ -16,7 +16,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://learn-liferay.github.ioblog/categories/liferay">
+  <link rel="canonical" href="http://blog.learn-liferay.comblog/categories/liferay">
   <link href="/favicon.png" type="image/png" rel="icon">
   <link href="/atom.xml" rel="alternate" title="Learn Liferay" type="application/atom+xml">
 
@@ -27,6 +27,18 @@
 
   <script src="/javascripts/libs/jquery/jquery-2.0.3.min.js"></script>
   
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-47258888-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
 
 </head>
 
@@ -55,6 +67,9 @@
                 <li >
                     <a href="/about">About</a>
                 </li>
+                <li >
+                    <a href="/feedback">Feedback</a>
+                </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li>
@@ -65,13 +80,6 @@
                 </li>
                 
             </ul>
-            
-                <form class="search navbar-form navbar-right" action="http://google.com/search" method="GET">
-                    <input type="hidden" name="q" value="site:learn-liferay.github.io">
-                    <div class="form-group">
-                        <input class="form-control" type="text" name="q" placeholder="Search">
-                    </div>
-                </form>
             
         </div>
     </div>
@@ -105,7 +113,7 @@
 
 <article class="page-header">
   
-<h1><a href="/blog/2014/01/20/welcome/">Welcome</a></h1>
+<h1><a href="/blog/2014/01/25/using-freemarker-macros-in-liferay-web-content-part-2/">Using FreeMarker Macros in Liferay Web Content - Part 2</a></h1>
 <p class="meta text-muted">
   
 
@@ -120,13 +128,47 @@
 
 
 
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2014-01-20T12:41:46-05:00" pubdate data-updated="true">Jan 20<span>th</span>, 2014</time>
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2014-01-25T20:05:12-05:00" pubdate data-updated="true">Jan 25<span>th</span>, 2014</time>
   
 
 <span class="glyphicon glyphicon-tags"></span>&nbsp;
 <span class="categories">
   
-    <a class='category' href='/blog/categories/info/'>Info</a>, <a class='category' href='/blog/categories/liferay/'>Liferay</a>
+    <a class='category' href='/blog/categories/freemarker/'>FreeMarker</a>, <a class='category' href='/blog/categories/liferay/'>Liferay</a>, <a class='category' href='/blog/categories/wcm/'>WCM</a>
+  
+</span>
+
+
+</p>
+
+</article>
+
+
+
+<article class="page-header">
+  
+<h1><a href="/blog/2014/01/24/using-freemarker-macros-in-liferay-web-content-part-1/">Using FreeMarker Macros in Liferay Web Content - Part 1</a></h1>
+<p class="meta text-muted">
+  
+
+
+
+
+
+
+
+
+
+
+
+
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2014-01-24T14:51:58-05:00" pubdate data-updated="true">Jan 24<span>th</span>, 2014</time>
+  
+
+<span class="glyphicon glyphicon-tags"></span>&nbsp;
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/freemarker/'>FreeMarker</a>, <a class='category' href='/blog/categories/hooks/'>Hooks</a>, <a class='category' href='/blog/categories/liferay/'>Liferay</a>, <a class='category' href='/blog/categories/wcm/'>WCM</a>
   
 </span>
 
@@ -153,6 +195,10 @@
   
   <div id="recent_posts" class="list-group">
     
+    <a class="list-group-item " href="/blog/2014/01/25/using-freemarker-macros-in-liferay-web-content-part-2/">Using FreeMarker Macros in Liferay Web Content - Part 2</a>
+    
+    <a class="list-group-item " href="/blog/2014/01/24/using-freemarker-macros-in-liferay-web-content-part-1/">Using FreeMarker Macros in Liferay Web Content - Part 1</a>
+    
     <a class="list-group-item " href="/blog/2014/01/20/welcome/">Welcome</a>
     
   </div>
@@ -164,15 +210,27 @@
   <div class="list-group">
     
     
-    <a class="list-group-item " href="/blog/categories/info/index.html">
+    <a class="list-group-item " href="/blog/categories/freemarker/index.html">
+        <span class="badge">2</span>
+        FreeMarker
+      </a>
+    
+    
+    <a class="list-group-item " href="/blog/categories/hooks/index.html">
         <span class="badge">1</span>
-        Info
+        Hooks
       </a>
     
     
     <a class="list-group-item active" href="/blog/categories/liferay/index.html">
-        <span class="badge">1</span>
+        <span class="badge">2</span>
         Liferay
+      </a>
+    
+    
+    <a class="list-group-item " href="/blog/categories/wcm/index.html">
+        <span class="badge">2</span>
+        WCM
       </a>
     
   </div>
@@ -205,9 +263,30 @@
 <script src="/javascripts/modernizr-2.0.js"></script>
 
 
+<script type="text/javascript">
+      var disqus_shortname = 'learnliferay';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
 
 
 
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
 
 
 

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Hooks | Learn Liferay]]></title>
+  <link href="http://blog.learn-liferay.com/blog/categories/hooks/atom.xml" rel="self"/>
+  <link href="http://blog.learn-liferay.com/"/>
+  <updated>2014-01-26T13:29:39-05:00</updated>
+  <id>http://blog.learn-liferay.com/</id>
+  <author>
+    <name><![CDATA[Barrie Selack]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Using FreeMarker Macros in Liferay Web Content - Part 1]]></title>
+    <link href="http://blog.learn-liferay.com/blog/2014/01/24/using-freemarker-macros-in-liferay-web-content-part-1/"/>
+    <updated>2014-01-24T14:51:58-05:00</updated>
+    <id>http://blog.learn-liferay.com/blog/2014/01/24/using-freemarker-macros-in-liferay-web-content-part-1</id>
+    <content type="html"><![CDATA[<p>Liferay supports using FreeMarker as a web content template language. There are many things I really like about FreeMarker and use it whenever possible. Macros are one of those features, as you can create libraries of routines you can use over and over. But it&rsquo;s not apparent where to place those libraries to get Liferay to recognize them and use them.</p>
+
+<!--more-->
+
+
+<p>There is a setting in portal.properties where you can specify macro libraries
+```</p>
+
+<pre><code>#
+# Input a list of comma delimited macros that will be loaded. These files
+# must exist in the class path.
+#
+freemarker.engine.macro.library=FTL_liferay.ftl as liferay
+</code></pre>
+
+<p>```</p>
+
+<p>but, unfortunately if you do, they are not recognized by WCM templates.</p>
+
+<p>So it looks like we need to find a way to put them somewhere that the built in template loaders will find them. The comment above is a provides the hint of where they need to be.</p>
+
+<p><code>These files must exist in the class path.</code></p>
+
+<p>So even though we can&rsquo;t specify them in that property, we just need to get them into the class path somewhere.</p>
+
+<p><strong>Hooks to the rescue!</strong></p>
+
+<p>We can create a hook to deploy our macro library files somewhere in the class path. And while most people talk about using a hook for custom jsps, any file can be deployed by a hook.</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>liferay-hook.xml </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="ni">&amp;lt;</span>?xml version=<span class="ni">&amp;ldquo;</span>1.0<span class="ni">&amp;rdquo;</span>?&gt;
+</span><span class='line'><span class="ni">&amp;lt;</span>!DOCTYPE hook PUBLIC <span class="ni">&amp;ldquo;&amp;ndash;</span>//Liferay//DTD Hook 6.1.0//EN<span class="ni">&amp;rdquo;</span> <span class="ni">&amp;ldquo;</span><span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">&quot;http://www.liferay.com/dtd/liferay-hook_6_1_0.dtd&quot;</span><span class="nt">&gt;</span>http://www.liferay.com/dtd/liferay-hook_6_1_0.dtd<span class="nt">&lt;/a&gt;</span><span class="ni">&amp;rdquo;</span>&gt;<span class="nt">&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;p&gt;&lt;hook&gt;&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;pre&gt;&lt;code&gt;</span><span class="ni">&amp;lt;</span>custom-jsp-dir<span class="ni">&amp;gt;</span>/custom_files<span class="ni">&amp;lt;</span>/custom-jsp-dir<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="nt">&lt;/code&gt;&lt;/pre&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;p&gt;&lt;/hook&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>Like a typical jsp hook, I just set the directory name for where the files will be added/replaced. In my case I used <strong>custom_files</strong> instead of custom_jsps because I&rsquo;m not using jsps.</p>
+
+<p>Where you put them in the class path is up to you, I put them in <code>/WEB-INF/classes/freemarker/macros</code></p>
+
+<p><img src="/images/freemarker_macros/custom-files-path.jpg" width="300"></p>
+
+<p>I&rsquo;ve created a hook in the <a href="https://github.com/learn-liferay/blog-files" title="blog files">blog files</a> project called <a href="https://github.com/learn-liferay/blog-files/tree/master/liferay-plugins-sdk-6.1.1/hooks/freemarker-macros-hook" title="FreeMarker Macros Hook">freemarker-macros-hook</a> for you to use as a starting point.</p>
+
+<p>Build and deploy your hook and verify that the library got deployed where you expected it to.</p>
+
+<p>In the next part, we&rsquo;ll actually use the mylib.ftl and see how this all works.</p>
+
+<hr />
+
+<p><em>(make sure you use the <strong><a href="https://github.com/learn-liferay/blog-files/blob/master/liferay-plugins-sdk-6.1.1/hooks/freemarker-macros-hook/docroot/custom_files/WEB-INF/classes/freemarker/macros/mylib.ftl" title="mylib.ftl">mylib.ftl</a></strong> in the project if you plan to move on to <a href="/blog/2014/01/25/using-freemarker-macros-in-liferay-web-content-part-2/" title="Part 2">part 2</a>)</em></p>
+]]></content>
+  </entry>
+  
+</feed>
