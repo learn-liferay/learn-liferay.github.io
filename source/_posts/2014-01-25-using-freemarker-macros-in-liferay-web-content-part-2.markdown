@@ -4,6 +4,8 @@ title: "Using FreeMarker Macros in Liferay Web Content - Part 2"
 date: 2014-01-25 20:05:12 -0500
 comments: true
 categories: [Liferay, FreeMarker, WCM]
+description: Using FreeMarker Macros in Liferay Web Content
+keywords: Liferay,FreeMarker,Hooks,WCM,Web Content,structures,templates
 ---
 
 [1]: http://www.liferay.com/documentation/liferay-portal/6.1/user-guide/-/ai/lp-6-1-ugen03-advanced-content-creation-6 "6.1 WCM Docs"

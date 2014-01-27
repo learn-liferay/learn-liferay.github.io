@@ -4,6 +4,8 @@ title: "Using FreeMarker Macros in Liferay Web Content - Part 1"
 date: 2014-01-24 14:51:58 -0500
 comments: true
 categories: [Liferay, FreeMarker, Hooks, WCM]
+description: Using FreeMarker Macros in Liferay Web Content
+keywords: Liferay,FreeMarker,Hooks,WCM,Web Content
 ---
 Liferay supports using FreeMarker as a web content template language. There are many things I really like about FreeMarker and use it whenever possible. Macros are one of those features, as you can create libraries of routines you can use over and over. But it's not apparent where to place those libraries to get Liferay to recognize them and use them.
 

@@ -7,7 +7,8 @@ title: Learn Liferay
 subtitle: Liferay Tips &amp; Tricks
 author: Barrie Selack
 simple_search: 
-description:
+description: This blog is to share ideas, tips and techniques for using Liferay. Using portlets, freemarker, service builder and more LIferay can be extended and enhanced.
+keywords: Liferay,FreeMarker,WCM,Web Content,portal,portlets
 
 # Default date format is "ordinal" (resulting in "July 22nd 2007")
 # You can customize the format as defined in
